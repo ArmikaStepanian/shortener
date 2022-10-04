@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta name="index" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <title>Second page</title>
+</head>
+<body>
+
+<h4>Your shortened URL is:</h4>
+
+<label for="short_url"></label>
+<input id="short_url" name="long" value="http://localhost:8000/{{ link.shortlink }}" onClick="this.select();"
+       style="width:300px;">
+
+
+<h6>Your shortened URL goes to: {{ link.longlink }}</h6>
+
+</body>
+</html>
