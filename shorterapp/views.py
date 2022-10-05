@@ -27,8 +27,9 @@ def shortened_url(request):
 def redirect_url_view(request, shortened_part):
     try:
         link = Link.objects.get(shortlink=shortened_part)
+        count_redirections(link)
         return HttpResponseRedirect(link.longlink)
-    except:
+    except Exception:
         raise Http404('<h2>Sorry page not found</h2>')
 
 
@@ -74,3 +75,8 @@ def response_with_new_link(request, random_string, long_url):
     }
     template = loader.get_template('shortened_url.html')
     return HttpResponse(template.render(context, request))
+
+
+def count_redirections(link):
+    link.count = link.count + 1
+    link.save()
