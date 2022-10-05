@@ -3,6 +3,7 @@ import string
 
 from django.http import HttpResponse, Http404
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.template import loader
 
 from shorterapp.models import Link
@@ -36,4 +37,8 @@ def redirect_url_view(request, shortened_part):
         link = Link.objects.get(shortlink=shortened_part)
         return HttpResponseRedirect(link.longlink)
     except:
-        raise Http404('Sorry link not found')
+        raise Http404('<h2>Sorry page not found</h2>')
+
+
+def show_help(request):
+    return render(request, 'help.html')
