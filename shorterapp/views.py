@@ -31,7 +31,7 @@ def shortened_url(request):
     return HttpResponse(template.render(context, request))
 
 
-def redirect_url_view(shortened_part):
+def redirect_url_view(request, shortened_part):
     try:
         link = Link.objects.get(shortlink=shortened_part)
         return HttpResponseRedirect(link.longlink)
