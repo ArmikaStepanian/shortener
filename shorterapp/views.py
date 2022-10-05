@@ -10,24 +10,23 @@ from shorterapp.models import Link
 
 
 def index(request):
-    links = Link.objects.all().values()
-    template = loader.get_template('index.html')
-    context = {
-        'links': links,
-    }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'index.html')
 
 
 def shortened_url(request):
-    N = 7
-    random_string = ''.join(random.choices(string.ascii_letters, k=N))
-    x = str(random_string)
-    y = request.POST['long_url_input']
-    link = Link(shortlink=x, longlink=y)
-    link.save()
-    context = {
-        'link': link,
-    }
+    n = 7
+    random_string = ''.join(random.choices(string.ascii_letters, k=n))
+    while not is_unique_combination(str(random_string)):
+        random_string = ''.join(random.choices(string.ascii_letters, k=n))
+    else:
+        x = str(random_string)
+        y = request.POST['long_url_input']
+        link = Link(shortlink=x, longlink=y)
+        link.save()
+        context = {
+            'link': link,
+        }
+
     template = loader.get_template('shortened_url.html')
     return HttpResponse(template.render(context, request))
 
@@ -42,3 +41,10 @@ def redirect_url_view(request, shortened_part):
 
 def show_help(request):
     return render(request, 'help.html')
+
+
+def is_unique_combination(combination):
+    if Link.objects.filter(shortlink=combination).exists():
+        return False
+    else:
+        return True
