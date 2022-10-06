@@ -26,7 +26,7 @@ class Test(TestCase):
         # url https://www.w3schools.com/django/django_models.php exists in database
         self.assertTrue(boolean2, True)
 
-    def test_success_redirect(self):
+    def test_success_redirection(self):
         client = Client()
         # url http://localhost:8000/gBjDrHC exists in database
         # and redirect to https://www.w3schools.com/django/django_models.php
@@ -36,10 +36,13 @@ class Test(TestCase):
         self.assertTrue(isinstance(response, HttpResponseRedirect))
         self.assertEqual(response.get('location'), 'https://www.w3schools.com/django/django_models.php')
 
-    def test_fail_redirect(self):
+    def test_fail_redirection(self):
         client = Client()
         # url http://localhost:8000/jkjkjkjk doesnt exist in database
         # and service returns Not found 404
         response = client.post('http://localhost:8000/jkjkjkjk')
 
         self.assertEqual(response.status_code, 404)
+
+
+
