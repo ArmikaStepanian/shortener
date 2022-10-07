@@ -97,7 +97,7 @@ def response_with_new_link(request, random_string, long_url):
     return HttpResponse(template.render(context, request))
 
 
-# Function increments redirections and save result in database
+# Function increments counter and saves result in database
 def count_redirections(link):
     link.count = link.count + 1
     link.save()
